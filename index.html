@@ -1,301 +1,652 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WorldFX Radio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{
-      --bg:#0f0f0f;
-      --bg2:#161616;
-      --bg3:#1e1e1e;
-      --bg4:#252525;
-      --text:#f0ece4;
-      --text2:#9a9080;
-      --text3:#4a4540;
-      --border:rgba(240,236,228,0.08);
-      --border2:rgba(240,236,228,0.15);
-      --orange:#f97316;
-      --orange2:#fb923c;
-      --orange-bg:rgba(249,115,22,0.10);
-      --radius:14px;
-      --radius-sm:8px;
-    }
-    html{scroll-behavior:smooth;}
-    body{
-      background-color:var(--bg);
-      color:var(--text);
-      font-family:'DM Sans',sans-serif;
-      min-height:100vh;
-      overflow-x:hidden;
-      position:relative;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tu lugar más Geek para todo lo de la cultura pop y con buena vibra. Escucha WorldFX Radio en vivo 24/7.">
+<meta name="theme-color" content="#f97316">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WorldFX Radio">
+<meta name="mobile-web-app-capable" content="yes">
+<title>WorldFX Radio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── FONDO TATUAJE ── */
-    .tattoo-bg{
-      position:fixed;inset:0;z-index:0;
-      overflow:hidden;
-      pointer-events:none;
-    }
-    .tattoo-bg svg{
-      position:absolute;
-      opacity:0.28;
-      filter:drop-shadow(0 0 8px currentColor);
-    }
-    .tattoo-bg .t1{top:-20px;left:-40px;width:420px;color:#f97316;}
-    .tattoo-bg .t2{top:28%;right:-60px;width:380px;transform:rotate(12deg);color:#a855f7;}
-    .tattoo-bg .t3{bottom:2%;left:-30px;width:360px;transform:rotate(-8deg);color:#22d3ee;}
-    .tattoo-bg .t4{bottom:8%;right:-20px;width:340px;transform:rotate(18deg);color:#f43f5e;}
-    .tattoo-bg .t5{top:16%;left:22%;width:280px;transform:rotate(-4deg);color:#84cc16;}
+  :root {
+    --orange: #f97316;
+    --orange-dim: #c2500d;
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(249,115,22,0.18);
+    --text: #f0ede8;
+    --muted: #8a8799;
+    --green: #22c55e;
+  }
 
-    body::after{
-      content:'';position:fixed;inset:0;z-index:0;
-      background:radial-gradient(ellipse at 50% 40%, transparent 20%, rgba(10,8,6,0.52) 100%);
-      pointer-events:none;
-    }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    .wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:2rem 1rem 3rem;}
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    /* HEADER */
-    .header{text-align:center;margin-bottom:2rem;}
-    .logo-ring{width:82px;height:82px;border-radius:50%;border:2px solid var(--orange);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 0 28px rgba(249,115,22,0.22);}
-    .logo-ring i{font-size:38px;color:var(--orange);}
-    .station-name{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;letter-spacing:1px;color:var(--text);line-height:1;}
-    .station-name span{color:var(--orange);}
-    .station-sub{font-size:11px;color:var(--text2);margin-top:8px;line-height:1.6;max-width:300px;margin-inline:auto;}
-    .live-badge{display:inline-flex;align-items:center;gap:5px;background:var(--orange-bg);border:1px solid rgba(249,115,22,0.35);color:var(--orange2);font-size:11px;font-weight:500;padding:3px 11px;border-radius:20px;margin-top:10px;}
-    .live-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:blink 1.2s infinite;}
-    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.1;}}
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    /* PLAYER CARD REPRODUCCIÓN INTERNA */
-    .player-card{background:rgba(22,22,22,0.92);border:0.5px solid var(--border2);border-radius:var(--radius);padding:2rem 1rem;margin-bottom:1rem;backdrop-filter:blur(8px);text-align:center;}
-    .now-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text2);margin-bottom:1.5rem;}
-    .btn-play{width:74px;height:74px;border-radius:50%;background:var(--orange);border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform .15s,background .15s;box-shadow:0 0 22px rgba(249,115,22,0.35);text-decoration:none;}
-    .btn-play:hover{transform:scale(1.07);background:#ea6a0a;}
-    .btn-play i{font-size:32px;color:#fff;}
-    /* Espaciado para corregir la alineación visual del icono play */
-    .btn-play .ti-player-play{margin-left: 5px;}
-    .status-bar{font-size:13px;color:var(--orange2);font-weight:500;margin-top:1.5rem;}
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--orange);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
 
-    /* DIVIDER */
-    .divider{display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem;}
-    .divider span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);white-space:nowrap;}
-    .divider::before,.divider::after{content:'';flex:1;height:0.5px;background:var(--border);}
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(249,115,22,0.12);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 0.08em;
+  }
 
-    /* CONTENT CARDS */
-    .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem;}
-    .content-card{
-      background:rgba(20,18,16,0.88);
-      border:0.5px solid var(--border);
-      border-radius:var(--radius);
-      padding:1.1rem .9rem 1rem;
-      display:flex;flex-direction:column;align-items:center;gap:.55rem;
-      transition:border-color .2s,transform .18s;
-      backdrop-filter:blur(4px);
-      overflow:hidden;position:relative;
-    }
-    .content-card:hover{transform:translateY(-3px);}
-    .cc-sports{border-top:2px solid #3b82f6;}
-    .cc-cinema{border-top:2px solid var(--orange);}
-    .cc-anime{border-top:2px solid #a855f7;}
-    .cc-fun{border-top:2px solid #22d3ee;}
-    .cc-music{border-top:2px solid #f43f5e;}
-    .cc-geek{border-top:2px solid #84cc16;}
-    .content-card svg{width:76px;height:76px;}
-    .content-card-name{font-size:13px;font-weight:500;color:var(--text);letter-spacing:.3px;}
-    .content-card-desc{font-size:11px;color:var(--text2);text-align:center;line-height:1.5;}
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
 
-    /* SHOW */
-    .show-card{background:rgba(22,22,22,0.9);border:0.5px solid var(--border2);border-left:3px solid var(--orange);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;display:flex;gap:14px;align-items:center;backdrop-filter:blur(6px);}
-    .show-icon{font-size:28px;color:var(--orange);flex-shrink:0;}
-    .show-name{font-size:15px;font-weight:500;color:var(--text);margin-bottom:2px;}
-    .show-detail{font-size:12px;color:var(--text2);}
-    .show-tag{font-size:10px;background:var(--orange-bg);color:var(--orange2);border:1px solid rgba(249,115,22,0.25);padding:2px 8px;border-radius:20px;margin-top:5px;display:inline-block;}
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
 
-    /* SOCIAL */
-    .social-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;}
-    .social-btn{display:flex;align-items:center;gap:10px;background:rgba(22,22,22,0.9);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:.75rem 1rem;text-decoration:none;color:var(--text);transition:border-color .15s,background .15s;backdrop-filter:blur(4px);}
-    .social-btn:hover{background:var(--bg3);}
-    .social-btn.facebook{border-color:rgba(59,130,246,0.25);}
-    .social-btn.instagram{border-color:rgba(225,48,108,0.25);}
-    .social-btn.tiktok{border-color:rgba(255,255,255,0.10);}
-    .social-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .social-icon.fb{background:rgba(59,130,246,0.12);}.social-icon.ig{background:rgba(225,48,108,0.12);}.social-icon.tt{background:rgba(255,255,255,0.06);}
-    .social-icon i{font-size:18px;}
-    .si-fb{color:#3b82f6;}.si-ig{color:#e1306c;}.si-tt{color:#e8eef8;}
-    .s-name{font-size:13px;font-weight:500;color:var(--text);}.s-sub{font-size:11px;color:var(--text2);}
-    
-    .wa-btn{display:flex;align-items:center;gap:12px;background:rgba(37,211,102,0.07);border:0.5px solid rgba(37,211,102,0.3);border-radius:var(--radius-sm);padding:.9rem 1.25rem;text-decoration:none;color:var(--text);transition:background .15s;margin-bottom:10px;}
-    .wa-btn:hover{background:rgba(37,211,102,0.12);}
-    .wa-btn-icon{width:40px;height:40px;border-radius:50%;background:rgba(37,211,102,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .wa-btn-icon i{font-size:20px;color:#25d366;}
-    .wa-label{font-size:14px;font-weight:500;color:var(--text);}.wa-num{font-size:12px;color:#25d366;font-family:'Orbitron',monospace;letter-spacing:1px;}
-    footer{text-align:center;margin-top:2rem;font-size:11px;color:var(--text3);line-height:1.8;}
-  </style>
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title span {
+    color: var(--orange);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 420px;
+    margin: 1rem auto 2.5rem;
+    line-height: 1.6;
+  }
+
+  /* PLAYER */
+  .player-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .player-station {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .station-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dim));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: white;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .station-info { text-align: left; }
+  .station-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+  .station-status { font-size: 0.75rem; color: var(--green); display: flex; align-items: center; gap: 5px; }
+  .station-status::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  /* WAVEFORM */
+  .waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 40px;
+    margin-bottom: 1.5rem;
+  }
+
+  .wave-bar {
+    width: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    opacity: 0.3;
+    transition: height 0.1s;
+  }
+
+  .waveform.playing .wave-bar { opacity: 0.8; }
+  .waveform.playing .wave-bar:nth-child(1) { animation: wave 0.9s ease-in-out infinite; }
+  .waveform.playing .wave-bar:nth-child(2) { animation: wave 0.7s ease-in-out infinite 0.1s; }
+  .waveform.playing .wave-bar:nth-child(3) { animation: wave 1.1s ease-in-out infinite 0.05s; }
+  .waveform.playing .wave-bar:nth-child(4) { animation: wave 0.8s ease-in-out infinite 0.2s; }
+  .waveform.playing .wave-bar:nth-child(5) { animation: wave 1s ease-in-out infinite 0.15s; }
+  .waveform.playing .wave-bar:nth-child(6) { animation: wave 0.75s ease-in-out infinite 0.08s; }
+  .waveform.playing .wave-bar:nth-child(7) { animation: wave 0.95s ease-in-out infinite 0.25s; }
+  .waveform.playing .wave-bar:nth-child(8) { animation: wave 0.85s ease-in-out infinite 0.12s; }
+  .waveform.playing .wave-bar:nth-child(9) { animation: wave 1.05s ease-in-out infinite 0.18s; }
+  .waveform.playing .wave-bar:nth-child(10) { animation: wave 0.78s ease-in-out infinite 0.22s; }
+
+  @keyframes wave {
+    0%, 100% { height: 6px; }
+    50% { height: 32px; }
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .play-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--orange);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+
+  .play-btn:hover { transform: scale(1.07); background: #ea6c0f; }
+  .play-btn:active { transform: scale(0.95); }
+
+  .play-btn svg { width: 22px; height: 22px; fill: white; }
+
+  .volume-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .volume-icon { color: var(--muted); font-size: 0.85rem; flex-shrink: 0; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--surface2);
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+  }
+
+  .player-listeners {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .player-listeners span { color: var(--orange); font-weight: 600; }
+
+  audio { display: none; }
+
+  /* CATEGORIES */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .cat-card:hover {
+    border-color: var(--orange);
+    transform: translateY(-3px);
+  }
+
+  .cat-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .cat-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 3px; }
+  .cat-desc { font-size: 0.7rem; color: var(--muted); line-height: 1.4; }
+
+  /* FEATURED SHOW */
+  .show-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .show-badge {
+    background: rgba(249,115,22,0.12);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+  }
+
+  .show-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .show-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.8rem; }
+
+  .tag {
+    background: var(--surface2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .show-time {
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .show-time strong { color: var(--text); }
+
+  /* SOCIAL */
+  .social-grid {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .social-btn:hover { border-color: var(--orange); transform: translateY(-2px); }
+
+  /* WHATSAPP */
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 0.9rem 1.6rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.15s, background 0.15s;
+  }
+
+  .wa-btn:hover { transform: translateY(-2px); background: #1ebe5a; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  footer strong { color: var(--orange); font-family: 'Orbitron', monospace; font-size: 0.7rem; }
+
+  @media (max-width: 600px) {
+    .player-card { padding: 1.5rem; }
+    .show-card { flex-direction: column; gap: 1rem; }
+    .hero-title { font-size: 2.4rem; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ══ FONDO TATUAJES ══ -->
-<div class="tattoo-bg">
-  <svg class="t1" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="120" stroke="currentColor" stroke-width="2.5"/><circle cx="150" cy="150" r="90" stroke="currentColor" stroke-width="2.5"/><circle cx="150" cy="150" r="12" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="150" cy="150" r="5" fill="currentColor"/><path d="M150 30 L160 145 L150 130 L140 145 Z" fill="currentColor"/><path d="M150 270 L160 155 L150 170 L140 155 Z" fill="currentColor" opacity=".6"/><path d="M30 150 L145 140 L130 150 L145 160 Z" fill="currentColor" opacity=".6"/><path d="M270 150 L155 140 L170 150 L155 160 Z" fill="currentColor"/><path d="M61 61 L143 143" stroke="currentColor" stroke-width="4" opacity=".5"/><path d="M239 61 L157 143" stroke="currentColor" stroke-width="4" opacity=".5"/><path d="M61 239 L143 157" stroke="currentColor" stroke-width="4" opacity=".5"/><path d="M239 239 L157 157" stroke="currentColor" stroke-width="4" opacity=".5"/><text x="144" y="22" font-size="18" fill="currentColor" font-family="serif" font-weight="bold">N</text><text x="144" y="290" font-size="18" fill="currentColor" font-family="serif" font-weight="bold">S</text><text x="276" y="156" font-size="18" fill="currentColor" font-family="serif" font-weight="bold">E</text><text x="10" y="156" font-size="18" fill="currentColor" font-family="serif" font-weight="bold">O</text><circle cx="150" cy="30" r="4" fill="currentColor"/><circle cx="150" cy="270" r="4" fill="currentColor" opacity=".6"/><circle cx="30" cy="150" r="4" fill="currentColor" opacity=".6"/><circle cx="270" cy="150" r="4" fill="currentColor"/></svg>
-  <svg class="t2" viewBox="0 0 280 320" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M140 20 C70 20 30 70 30 130 C30 180 55 210 80 225 L80 260 L200 260 L200 225 C225 210 250 180 250 130 C250 70 210 20 140 20Z" stroke="currentColor" stroke-width="4" fill="none"/><rect x="80" y="255" width="120" height="10" rx="5" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="88" y="265" width="14" height="22" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="106" y="265" width="14" height="22" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="124" y="265" width="14" height="22" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="142" y="265" width="14" height="22" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="160" y="265" width="14" height="22" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="178" y="265" width="14" height="22" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/><ellipse cx="100" cy="130" rx="32" ry="36" stroke="currentColor" stroke-width="4" fill="none"/><ellipse cx="180" cy="130" rx="32" ry="36" stroke="currentColor" stroke-width="4" fill="none"/><path d="M132 130 L148 130" stroke="currentColor" stroke-width="2.5"/><path d="M130 175 L140 155 L150 175 L145 180 L135 180 Z" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M140 20 L145 60 L138 90" stroke="currentColor" stroke-width="4" opacity=".6"/><path d="M200 80 L185 110 L195 130" stroke="currentColor" stroke-width="4" opacity=".5"/><circle cx="55" cy="120" r="12" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="55" cy="120" r="5" fill="currentColor" opacity=".4"/><circle cx="55" cy="108" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="55" cy="132" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="43" cy="120" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="67" cy="120" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="225" cy="120" r="12" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="225" cy="120" r="5" fill="currentColor" opacity=".4"/><circle cx="225" cy="108" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="225" cy="132" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="213" cy="120" r="6" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="237" cy="120" r="6" stroke="currentColor" stroke-width="4" fill="none"/></svg>
-  <svg class="t3" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M130 240 C60 240 20 200 20 150 C20 100 55 70 100 70 C140 70 165 95 165 130 C165 160 145 178 120 178 C100 178 88 165 88 148 C88 133 98 125 110 125 C120 125 127 132 127 142" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M127 142 L122 155 M127 142 L132 155" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><ellipse cx="127" cy="135" rx="12" ry="9" stroke="currentColor" stroke-width="2.5" fill="none" transform="rotate(-20 127 135)"/><circle cx="122" cy="131" r="3" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="122" cy="131" r="1.5" fill="currentColor" opacity=".7"/><path d="M80 190 C70 210 90 230 110 220" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M130 230 C150 245 170 235 165 215" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="200" cy="80" r="20" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="200" cy="80" r="14" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="200" cy="80" r="8" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="200" cy="80" r="3" fill="currentColor" opacity=".5"/><path d="M200 60 L200 55 M200 105 L200 110 M180 80 L175 80 M220 80 L225 80" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M190 95 C180 110 168 105 172 95 C176 85 190 88 190 95Z" stroke="currentColor" stroke-width="4" fill="none"/><path d="M210 95 C220 110 232 105 228 95 C224 85 210 88 210 95Z" stroke="currentColor" stroke-width="4" fill="none"/></svg>
-  <svg class="t4" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="60" r="45" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="100" cy="50" r="35" fill="#0f0f0f" stroke="none"/><path d="M80 260 L80 200 C80 180 70 165 65 150 C55 130 50 115 60 100 C70 85 85 82 95 88 C100 78 110 72 120 75 C130 72 140 78 145 88 C155 82 170 85 180 100 C190 115 185 130 175 150 C170 165 160 180 160 200 L160 260" stroke="currentColor" stroke-width="4" fill="none"/><path d="M95 88 L85 55 L110 75" stroke="currentColor" stroke-width="4" fill="none"/><path d="M145 88 L155 55 L130 75" stroke="currentColor" stroke-width="4" fill="none"/><path d="M105 110 Q120 125 135 110" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M115 120 Q120 128 125 120" stroke="currentColor" stroke-width="4" fill="none"/><ellipse cx="105" cy="100" rx="8" ry="6" stroke="currentColor" stroke-width="2.5" fill="none"/><ellipse cx="135" cy="100" rx="8" ry="6" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="105" cy="100" r="3" fill="currentColor" opacity=".5"/><circle cx="135" cy="100" r="3" fill="currentColor" opacity=".5"/><path d="M90 130 Q95 140 90 150" stroke="currentColor" stroke-width="4" opacity=".5"/><path d="M150 130 Q145 140 150 150" stroke="currentColor" stroke-width="4" opacity=".5"/><path d="M100 160 Q105 175 100 185" stroke="currentColor" stroke-width="4" opacity=".4"/><path d="M140 160 Q135 175 140 185" stroke="currentColor" stroke-width="4" opacity=".4"/><path d="M80 260 L72 270 M80 260 L88 272 M160 260 L152 270 M160 260 L168 272" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M30 40 L32 46 L38 46 L33 50 L35 56 L30 52 L25 56 L27 50 L22 46 L28 46 Z" fill="currentColor" opacity=".7"/><path d="M200 30 L201 34 L205 34 L202 36 L203 40 L200 38 L197 40 L198 36 L195 34 L199 34 Z" fill="currentColor" opacity=".5"/></svg>
-  <svg class="t5" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 10 L120 50 L160 40 L140 75 L180 80 L150 105 L170 140 L130 130 L120 170 L100 140 L80 170 L70 130 L30 140 L50 105 L20 80 L60 75 L40 40 L80 50 Z" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M100 30 L112 55 L140 48 L126 70 L152 74 L132 90 L146 116 L118 108 L110 138 L100 114 L90 138 L82 108 L54 116 L68 90 L48 74 L74 70 L60 48 L88 55 Z" stroke="currentColor" stroke-width="2.5" fill="none" opacity=".6"/><circle cx="100" cy="90" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="100" cy="90" r="10" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="100" cy="90" r="4" fill="currentColor" opacity=".6"/><path d="M100 10 L95 25 L100 20 L105 25 Z" fill="currentColor" opacity=".5"/><path d="M100 172 L95 157 L100 162 L105 157 Z" fill="currentColor" opacity=".5"/><path d="M40 40 C10 20 5 60 20 80" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M20 80 C10 100 25 110 48 74" stroke="currentColor" stroke-width="4" fill="none"/><path d="M160 40 C190 20 195 60 180 80" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M180 80 C190 100 175 110 152 74" stroke="currentColor" stroke-width="4" fill="none"/></svg>
-</div>
+<header>
+  <a href="/" class="logo">WORLD<span style="color:white">FX</span></a>
+  <div class="live-badge"><div class="live-dot"></div>EN VIVO · 24/7</div>
+</header>
 
-<div class="wrap">
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-eyebrow">🎙 Estación de Radio Online</p>
+  <h1 class="hero-title">WORLD<span>FX</span><br>RADIO</h1>
+  <p class="hero-sub">Tu lugar más Geek para todo lo de la cultura pop y con buena vibra.</p>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="logo-ring"><i class="ti ti-radio"></i></div>
-    <div class="station-name">World<span>FX</span>Radio</div>
-    <div class="station-sub">Tu lugar más Geek para todo lo de la cultura pop y con buena vibra</div>
-    <div class="live-badge"><span class="live-dot"></span> EN VIVO · 24/7</div>
-  </div>
-
-  <!-- REPRODUCTOR NATIVO DE AUDIO INTEGRADO (SIN SALIR DE LA PÁGINA) -->
   <div class="player-card">
-    <div class="now-label">Sintoniza la señal en vivo</div>
-    
-    <!-- Elemento de audio invisible que salta el bloqueo iframe -->
-    <audio id="radio-stream" src="http://163.192.155.50/radio/8000/radio.mp3" preload="none"></audio>
-    
-    <button id="play-trigger" class="btn-play" aria-label="Reproducir señal">
-      <i id="play-icon" class="ti ti-player-play"></i>
-    </button>
-    
-    <div id="status-text" class="status-bar">
-      Haz clic para escuchar en vivo
+    <div class="player-station">
+      <div class="station-avatar">WFX<br>RADIO</div>
+      <div class="station-info">
+        <div class="station-name">WorldFX Radio</div>
+        <div class="station-status" id="status-text">Cargando stream...</div>
+      </div>
+    </div>
+
+    <div class="waveform" id="waveform">
+      <div class="wave-bar" style="height:10px"></div>
+      <div class="wave-bar" style="height:18px"></div>
+      <div class="wave-bar" style="height:8px"></div>
+      <div class="wave-bar" style="height:24px"></div>
+      <div class="wave-bar" style="height:14px"></div>
+      <div class="wave-bar" style="height:20px"></div>
+      <div class="wave-bar" style="height:10px"></div>
+      <div class="wave-bar" style="height:16px"></div>
+      <div class="wave-bar" style="height:22px"></div>
+      <div class="wave-bar" style="height:12px"></div>
+    </div>
+
+    <div class="player-controls">
+      <button class="play-btn" id="playBtn" aria-label="Reproducir o pausar">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="volume-wrap">
+        <span class="volume-icon">🔈</span>
+        <input type="range" id="volume" min="0" max="1" step="0.05" value="0.8" aria-label="Volumen">
+        <span class="volume-icon">🔊</span>
+      </div>
+    </div>
+
+    <p class="player-listeners">Hasta <span>400</span> oyentes simultáneos · Gratis</p>
+    <audio id="radioAudio" preload="none" crossorigin="anonymous">
+      <source src="http://163.192.155.50/listen/worldfxradio/radio.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section">
+  <p class="section-label">Contenido</p>
+  <h2 class="section-title">Nuestros temas</h2>
+  <div class="categories">
+    <div class="cat-card">
+      <div class="cat-icon">⚽</div>
+      <div class="cat-name">Deportes</div>
+      <div class="cat-desc">Análisis, resultados y cobertura en vivo</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🎬</div>
+      <div class="cat-name">Cine</div>
+      <div class="cat-desc">Reseñas, estrenos y pantalla grande</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">⛩️</div>
+      <div class="cat-name">Anime</div>
+      <div class="cat-desc">Series, manga y universo otaku</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🎮</div>
+      <div class="cat-name">Gaming</div>
+      <div class="cat-desc">Humor, entretenimiento y diversión</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🎵</div>
+      <div class="cat-name">Música</div>
+      <div class="cat-desc">Playlists y lo que está sonando</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🚀</div>
+      <div class="cat-name">Geek & Tech</div>
+      <div class="cat-desc">Tecnología, sci-fi y cultura pop</div>
     </div>
   </div>
+</section>
 
-  <!-- CONTENIDO -->
-  <div class="divider"><span>Nuestro contenido</span></div>
-  <div class="content-grid">
-    <div class="content-card cc-sports">
-      <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="22" width="60" height="38" rx="5" stroke="#3b82f6" stroke-width="1.5" fill="none"/><line x1="38" y1="22" x2="38" y2="60" stroke="#3b82f6" stroke-width="0.8" stroke-dasharray="3 2"/><circle cx="38" cy="41" r="9" stroke="#3b82f6" stroke-width="0.8" fill="none"/><rect x="8" y="32" width="7" height="18" rx="1" stroke="#3b82f6" stroke-width="1.2" fill="none"/><rect x="61" y="32" width="7" height="18" rx="1" stroke="#3b82f6" stroke-width="1.2" fill="none"/><circle cx="38" cy="41" r="5.5" fill="none" stroke="#e8eef8" stroke-width="1.5"/><path d="M35 38 Q38 36 41 38 Q42 41 40 44 Q38 45 36 44 Q34 41 35 38Z" stroke="#3b82f6" stroke-width="1" fill="none"/><circle cx="22" cy="32" r="3.5" stroke="#3b82f6" stroke-width="1.2" fill="none"/><line x1="22" y1="35.5" x2="22" y2="46" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/><line x1="22" y1="39" x2="17" y2="43" stroke="#3b82f6" stroke-width="1.2" stroke-linecap="round"/><line x1="22" y1="39" x2="27" y2="43" stroke="#3b82f6" stroke-width="1.2" stroke-linecap="round"/><line x1="22" y1="46" x2="19" y2="54" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/><line x1="22" y1="46" x2="25" y2="54" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/><circle cx="54" cy="32" r="3.5" stroke="#f97316" stroke-width="1.2" fill="none"/><line x1="54" y1="35.5" x2="54" y2="46" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/><line x1="54" y1="39" x2="49" y2="43" stroke="#f97316" stroke-width="1.2" stroke-linecap="round"/><line x1="54" y1="39" x2="59" y2="43" stroke="#f97316" stroke-width="1.2" stroke-linecap="round"/><line x1="54" y1="46" x2="51" y2="54" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/><line x1="54" y1="46" x2="57" y2="54" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <div class="content-card-name">Deportes</div>
-      <div class="content-card-desc">Análisis, resultados y cobertura en vivo</div>
-    </div>
+<hr class="divider">
 
-    <div class="content-card cc-cinema">
-      <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="14" width="56" height="36" rx="3" stroke="#f97316" stroke-width="1.5" fill="none"/><line x1="10" y1="23" x2="66" y2="23" stroke="#f97316" stroke-width="0.4" opacity=".4"/><line x1="10" y1="32" x2="66" y2="32" stroke="#f97316" stroke-width="0.4" opacity=".4"/><line x1="10" y1="41" x2="66" y2="41" stroke="#f97316" stroke-width="0.4" opacity=".4"/><polygon points="28,20 28,42 52,31" stroke="#f97316" stroke-width="1.5" fill="none"/><rect x="30" y="50" width="16" height="5" rx="1" stroke="#f97316" stroke-width="1" fill="none"/><rect x="20" y="55" width="36" height="4" rx="2" stroke="#f97316" stroke-width="1" fill="none"/><rect x="4" y="16" width="6" height="32" rx="1" stroke="#f97316" stroke-width="1" fill="none"/><rect x="5" y="19" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="5" y="27" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="5" y="35" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="5" y="43" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="66" y="16" width="6" height="32" rx="1" stroke="#f97316" stroke-width="1" fill="none"/><rect x="67" y="19" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="67" y="27" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="67" y="35" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/><rect x="67" y="43" width="4" height="5" rx=".5" stroke="#f97316" stroke-width="0.8" fill="none"/></svg>
-      <div class="content-card-name">Cine</div>
-      <div class="content-card-desc">Reseñas, estrenos y pantalla grande</div>
-    </div>
-
-    <div class="content-card cc-anime">
-      <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="38" cy="42" rx="22" ry="24" stroke="#a855f7" stroke-width="1.5" fill="none"/><path d="M16 34 Q18 14 38 16 Q58 14 60 34" stroke="#a855f7" stroke-width="1.5" fill="none"/><path d="M16 34 Q10 24 15 16 Q20 10 26 16" stroke="#a855f7" stroke-width="1.2" fill="none"/><path d="M60 34 Q66 24 61 16 Q56 10 50 16" stroke="#a855f7" stroke-width="1.2" fill="none"/><ellipse cx="28" cy="42" rx="7" ry="8" stroke="#a855f7" stroke-width="1.5" fill="none"/><ellipse cx="48" cy="42" rx="7" ry="8" stroke="#a855f7" stroke-width="1.5" fill="none"/><circle cx="28" cy="43" r="4" stroke="#a855f7" stroke-width="1" fill="none"/><circle cx="48" cy="43" r="4" stroke="#a855f7" stroke-width="1" fill="none"/><circle cx="29" cy="40" r="1.5" fill="#e8eef8" opacity=".8"/><circle cx="49" cy="40" r="1.5" fill="#e8eef8" opacity=".8"/><path d="M32 57 Q38 62 44 57" stroke="#a855f7" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M22 34 Q28 31 32 34" stroke="#a855f7" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M44 34 Q48 31 54 34" stroke="#a855f7" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="19" cy="50" rx="4" ry="2.5" stroke="#a855f7" stroke-width="0.8" fill="none" opacity=".5"/><ellipse cx="57" cy="50" rx="4" ry="2.5" stroke="#a855f7" stroke-width="0.8" fill="none" opacity=".5"/></svg>
-      <div class="content-card-name">Anime</div>
-      <div class="content-card-desc">Series, manga y universo otaku</div>
-    </div>
-
-    <div class="content-card cc-fun">
-      <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="24" width="56" height="32" rx="14" stroke="#22d3ee" stroke-width="1.5" fill="none"/><rect x="18" y="34" width="14" height="4" rx="1" stroke="#22d3ee" stroke-width="1.2" fill="none"/><rect x="23" y="29" width="4" height="14" rx="1" stroke="#22d3ee" stroke-width="1.2" fill="none"/><circle cx="48" cy="33" r="3.5" stroke="#f43f5e" stroke-width="1.2" fill="none"/><circle cx="55" cy="40" r="3.5" stroke="#84cc16" stroke-width="1.2" fill="none"/><circle cx="48" cy="47" r="3.5" stroke="#3b82f6" stroke-width="1.2" fill="none"/><circle cx="41" cy="40" r="3.5" stroke="#f97316" stroke-width="1.2" fill="none"/><rect x="31" y="38" width="5" height="3" rx="1.5" stroke="#22d3ee" stroke-width="1" fill="none" opacity=".6"/><rect x="38" y="38" width="5" height="3" rx="1.5" stroke="#22d3ee" stroke-width="1" fill="none" opacity=".6"/><circle cx="25" cy="48" r="5.5" stroke="#22d3ee" stroke-width="1.2" fill="none"/><circle cx="25" cy="48" r="2.5" stroke="#22d3ee" stroke-width="1" fill="none"/><circle cx="48" cy="52" r="5.5" stroke="#22d3ee" stroke-width="1.2" fill="none"/><circle cx="48" cy="52" r="2.5" stroke="#22d3ee" stroke-width="1" fill="none"/><rect x="13" y="18" width="16" height="8" rx="4" stroke="#22d3ee" stroke-width="1.2" fill="none"/><rect x="47" y="18" width="16" height="8" rx="4" stroke="#22d3ee" stroke-width="1.2" fill="none"/></svg>
-      <div class="content-card-name">Diversión</div>
-      <div class="content-card-desc">Gaming, humor y entertainment</div>
-    </div>
-
-    <div class="content-card cc-music">
-      <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M40 12 L62 8 L62 26 L40 30 Z" stroke="#f43f5e" stroke-width="1.5" fill="none"/><line x1="40" y1="12" x2="40" y2="54" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"/><line x1="62" y1="8" x2="62" y2="50" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"/><ellipse cx="34" cy="55" rx="8" ry="5.5" stroke="#f43f5e" stroke-width="1.5" fill="none" transform="rotate(-15 34 55)"/><ellipse cx="56" cy="51" rx="8" ry="5.5" stroke="#f43f5e" stroke-width="1.5" fill="none" transform="rotate(-15 56 51)"/><path d="M10 28 Q15 38 10 48" stroke="#f43f5e" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/><path d="M6 22 Q13 38 6 54" stroke="#f43f5e" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".3"/><path d="M3 16 Q11 38 3 60" stroke="#f43f5e" stroke-width="0.8" fill="none" stroke-linecap="round" opacity=".2"/></svg>
-      <div class="content-card-name">Música</div>
-      <div class="content-card-desc">Playlists y lo que está sonando</div>
-    </div>
-
-    <div class="content-card cc-geek">
-      <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M38 6 Q46 18 46 36 L38 43 L30 36 Q30 18 38 6Z" stroke="#84cc16" stroke-width="1.5" fill="none"/><circle cx="38" cy="26" r="5.5" stroke="#84cc16" stroke-width="1.2" fill="none"/><circle cx="38" cy="26" r="2.5" stroke="#84cc16" stroke-width="1" fill="none"/><path d="M30 36 L20 50 L30 46 Z" stroke="#84cc16" stroke-width="1.2" fill="none"/><path d="M46 36 L56 50 L46 46 Z" stroke="#84cc16" stroke-width="1.2" fill="none"/><path d="M32 45 Q34 56 38 66 Q42 56 44 45 Q41 51 38 49 Q35 51 32 45Z" stroke="#f97316" stroke-width="1.5" fill="none"/><path d="M34 48 Q36 54 38 59 Q40 54 42 48 Q40 51 38 50 Q36 51 34 48Z" stroke="#fcd34d" stroke-width="1" fill="none"/><circle cx="12" cy="14" r="2" stroke="#84cc16" stroke-width="1" fill="none"/><circle cx="64" cy="20" r="1.5" stroke="#84cc16" stroke-width="1" fill="none"/><circle cx="8" cy="44" r="1.5" stroke="#84cc16" stroke-width="1" fill="none"/><circle cx="68" cy="38" r="2" stroke="#84cc16" stroke-width="1" fill="none"/><text x="5" y="72" font-size="10" stroke="#84cc16" stroke-width="0.3" fill="none" font-family="monospace">&lt;/&gt;</text><text x="54" y="12" font-size="9" stroke="#84cc16" stroke-width="0.3" fill="none" font-family="monospace">{}</text></svg>
-      <div class="content-card-name">Geek &amp; Tech</div>
-      <div class="content-card-desc">Tecnología, sci-fi y cultura pop</div>
-    </div>
-  </div>
-
-  <!-- PROGRAMA DESTACADO -->
-  <div class="divider"><span>Programa destacado</span></div>
+<section class="section">
+  <p class="section-label">Programa destacado</p>
   <div class="show-card">
-    <i class="ti ti-device-tv show-icon"></i>
     <div>
-      <div class="show-name">K-ultureando by Castlebeck</div>
-      <div class="show-detail">Cine · Recomendaciones · Noticias · Estrenos</div>
-      <span class="show-tag">Miércoles 9:00 PM – 11:00 PM</span>
+      <div class="show-badge">★ Programa estrella</div>
+      <div class="show-name">K-ultureando<br>by Castlebeck</div>
+      <div class="show-tags">
+        <span class="tag">Cine</span>
+        <span class="tag">Recomendaciones</span>
+        <span class="tag">Noticias</span>
+        <span class="tag">Estrenos</span>
+      </div>
+      <div class="show-time">📅 <strong>Miércoles</strong> · 9:00 PM – 11:00 PM</div>
     </div>
   </div>
+</section>
 
-  <!-- REDES SÍGUENOS -->
-  <div class="divider"><span>Síguenos</span></div>
+<hr class="divider">
+
+<section class="section">
+  <p class="section-label">Síguenos</p>
+  <h2 class="section-title">Redes sociales</h2>
   <div class="social-grid">
-    <a class="social-btn facebook" href="https://facebook.com/WorldFXRadio" target="_blank" rel="noopener">
-      <div class="social-icon fb"><i class="ti ti-brand-facebook si-fb"></i></div>
-      <div><div class="s-name">Facebook</div><div class="s-sub">WorldFX Radio</div></div>
+    <a href="https://facebook.com/WorldFXRadio" class="social-btn" target="_blank" rel="noopener">
+      📘 Facebook
     </a>
-    <a class="social-btn instagram" href="https://instagram.com/WorldFXRadio" target="_blank" rel="noopener">
-      <div class="social-icon ig"><i class="ti ti-brand-instagram si-ig"></i></div>
-      <div><div class="s-name">Instagram</div><div class="s-sub">@WorldFXRadio</div></div>
+    <a href="https://instagram.com/WorldFXRadio" class="social-btn" target="_blank" rel="noopener">
+      📸 Instagram
     </a>
-    <a class="social-btn tiktok" href="https://tiktok.com/@WorldFXRadio" target="_blank" rel="noopener">
-      <div class="social-icon tt"><i class="ti ti-brand-tiktok si-tt"></i></div>
-      <div><div class="s-name">TikTok</div><div class="s-sub">@WorldFXRadio</div></div>
-    </a>
-    <a class="social-btn" href="https://live365.com/station/worldfxradio" target="_blank" rel="noopener">
-      <div class="social-icon" style="background:rgba(249,115,22,0.12)"><i class="ti ti-radio" style="color:var(--orange);font-size:18px"></i></div>
-      <div><div class="s-name">Live365</div><div class="s-sub">Escuchar</div></div>
+    <a href="https://tiktok.com/@WorldFXRadio" class="social-btn" target="_blank" rel="noopener">
+      🎵 TikTok
     </a>
   </div>
+</section>
 
-  <!-- WHATSAPP CONTACTO -->
-  <div class="divider"><span>Contáctanos</span></div>
-  <a class="wa-btn" href="https://wa.me/528148231865" target="_blank" rel="noopener">
-    <div class="wa-btn-icon"><i class="ti ti-brand-whatsapp"></i></div>
-    <div>
-      <div class="wa-label">Escríbenos por WhatsApp</div>
-      <div class="wa-num">81 4823 1865</div>
-    </div>
+<hr class="divider">
+
+<section class="section">
+  <p class="section-label">Contáctanos</p>
+  <h2 class="section-title">Escríbenos</h2>
+  <a href="https://wa.me/528148231865" class="wa-btn" target="_blank" rel="noopener">
+    💬 WhatsApp · 81 4823 1865
   </a>
+</section>
 
-  <footer>WorldFX Radio &copy; 2026<br>Tu lugar más Geek · Powered by AzuraCast</footer>
-</div>
+<footer>
+  <strong>WORLDFX RADIO</strong> © 2025 · Tu lugar más Geek · Powered by Caster.fm
+</footer>
 
-<!-- SCRIPT DE CONTROL PARA REPRODUCCIÓN INTERNA DIRECTA -->
 <script>
-  const streamUrl = "https://163.192.155.50/radio/8000/radio.mp3"; 
-  const audio = document.getElementById("radio-stream");
-  const playBtn = document.getElementById("play-trigger");
-  const playIcon = document.getElementById("play-icon");
-  const statusText = document.getElementById("status-text");
+  const audio = document.getElementById('radioAudio');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const waveform = document.getElementById('waveform');
+  const statusText = document.getElementById('status-text');
+  const volume = document.getElementById('volume');
 
-  playBtn.addEventListener("click", function() {
-    if (audio.paused) {
-      // Truco para forzar recarga del stream en vivo sin retraso
-      audio.src = streamUrl;
+  const playPath = 'M8 5v14l11-7z';
+  const pausePath = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+
+  let playing = false;
+
+  statusText.textContent = 'En vivo · Presiona play';
+  statusText.style.color = '#22c55e';
+
+  playBtn.addEventListener('click', () => {
+    if (!playing) {
+      audio.src = 'http://163.192.155.50/listen/worldfxradio/radio.mp3';
       audio.load();
-      
-      statusText.innerText = "Conectando señal...";
-      
-      audio.play()
-        .then(() => {
-          playIcon.className = "ti ti-player-pause";
-          // Ajustamos margen para que la pausa quede centrada
-          playIcon.style.marginLeft = "0px"; 
-          statusText.innerText = "Transmitiendo en Vivo 📻";
-        })
-        .catch(err => {
-          console.error("Error al reproducir:", err);
-          statusText.innerText = "Error al conectar la señal.";
-        });
+      audio.play().then(() => {
+        playing = true;
+        playIcon.setAttribute('d', pausePath);
+        waveform.classList.add('playing');
+        statusText.textContent = 'Transmitiendo en vivo';
+      }).catch(() => {
+        statusText.textContent = 'Error al conectar, intenta de nuevo';
+        statusText.style.color = '#f87171';
+      });
     } else {
       audio.pause();
-      // Cortamos el src al pausar para no seguir consumiendo tus datos del servidor Oracle tras bambalinas
-      audio.src = ""; 
-      playIcon.className = "ti ti-player-play";
-      playIcon.style.marginLeft = "5px";
-      statusText.innerText = "Señal en pausa";
+      audio.src = '';
+      playing = false;
+      playIcon.setAttribute('d', playPath);
+      waveform.classList.remove('playing');
+      statusText.textContent = 'En pausa · Presiona play';
     }
   });
-</script>
 
+  volume.addEventListener('input', () => {
+    audio.volume = volume.value;
+  });
+
+  audio.volume = 0.8;
+</script>
 </body>
 </html>
