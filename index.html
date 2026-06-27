@@ -508,7 +508,7 @@
 
     <p class="player-listeners">Hasta <span>400</span> oyentes simultáneos · Gratis</p>
     <audio id="radioAudio" preload="none" crossorigin="anonymous">
-      <source src="http://163.192.155.50/listen/worldfxradio/radio.mp3" type="audio/mpeg">
+      <source src="https://worldfxradio.duckdns.org/listen/worldfxradio/radio.mp3" type="audio/mpeg">
     </audio>
   </div>
 </section>
@@ -621,7 +621,7 @@
 
   playBtn.addEventListener('click', () => {
     if (!playing) {
-      audio.src = 'http://163.192.155.50/listen/worldfxradio/radio.mp3';
+      audio.src = 'https://worldfxradio.duckdns.org/listen/worldfxradio/radio.mp3';
       audio.load();
       audio.play().then(() => {
         playing = true;
