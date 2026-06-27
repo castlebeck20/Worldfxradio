@@ -71,8 +71,15 @@
     .live-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:blink 1.2s infinite;}
     @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.1;}}
 
-    /* PLAYER CONTAINER (IFRAME EMBED) */
-    .player-card{background:rgba(22,22,22,0.92);border:0.5px solid var(--border2);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;backdrop-filter:blur(8px);}
+    /* PLAYER CARD REPRODUCCIÓN INTERNA */
+    .player-card{background:rgba(22,22,22,0.92);border:0.5px solid var(--border2);border-radius:var(--radius);padding:2rem 1rem;margin-bottom:1rem;backdrop-filter:blur(8px);text-align:center;}
+    .now-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text2);margin-bottom:1.5rem;}
+    .btn-play{width:74px;height:74px;border-radius:50%;background:var(--orange);border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform .15s,background .15s;box-shadow:0 0 22px rgba(249,115,22,0.35);text-decoration:none;}
+    .btn-play:hover{transform:scale(1.07);background:#ea6a0a;}
+    .btn-play i{font-size:32px;color:#fff;}
+    /* Espaciado para corregir la alineación visual del icono play */
+    .btn-play .ti-player-play{margin-left: 5px;}
+    .status-bar{font-size:13px;color:var(--orange2);font-weight:500;margin-top:1.5rem;}
 
     /* DIVIDER */
     .divider{display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem;}
@@ -151,9 +158,20 @@
     <div class="live-badge"><span class="live-dot"></span> EN VIVO · 24/7</div>
   </div>
 
-  <!-- PLAYER CARD OPTIMIZADO (EMBED SEGURO DE AZURACAST) -->
+  <!-- REPRODUCTOR NATIVO DE AUDIO INTEGRADO (SIN SALIR DE LA PÁGINA) -->
   <div class="player-card">
-    <iframe src="https://163.192.155.50/public/worldfxradio/embed" frameborder="0" allowtransparency="true" style="width: 100%; min-height: 125px; border: 0; border-radius: 8px;"></iframe>
+    <div class="now-label">Sintoniza la señal en vivo</div>
+    
+    <!-- Elemento de audio invisible que salta el bloqueo iframe -->
+    <audio id="radio-stream" src="http://163.192.155.50/radio/8000/radio.mp3" preload="none"></audio>
+    
+    <button id="play-trigger" class="btn-play" aria-label="Reproducir señal">
+      <i id="play-icon" class="ti ti-player-play"></i>
+    </button>
+    
+    <div id="status-text" class="status-bar">
+      Haz clic para escuchar en vivo
+    </div>
   </div>
 
   <!-- CONTENIDO -->
@@ -180,7 +198,7 @@
     <div class="content-card cc-fun">
       <svg viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="24" width="56" height="32" rx="14" stroke="#22d3ee" stroke-width="1.5" fill="none"/><rect x="18" y="34" width="14" height="4" rx="1" stroke="#22d3ee" stroke-width="1.2" fill="none"/><rect x="23" y="29" width="4" height="14" rx="1" stroke="#22d3ee" stroke-width="1.2" fill="none"/><circle cx="48" cy="33" r="3.5" stroke="#f43f5e" stroke-width="1.2" fill="none"/><circle cx="55" cy="40" r="3.5" stroke="#84cc16" stroke-width="1.2" fill="none"/><circle cx="48" cy="47" r="3.5" stroke="#3b82f6" stroke-width="1.2" fill="none"/><circle cx="41" cy="40" r="3.5" stroke="#f97316" stroke-width="1.2" fill="none"/><rect x="31" y="38" width="5" height="3" rx="1.5" stroke="#22d3ee" stroke-width="1" fill="none" opacity=".6"/><rect x="38" y="38" width="5" height="3" rx="1.5" stroke="#22d3ee" stroke-width="1" fill="none" opacity=".6"/><circle cx="25" cy="48" r="5.5" stroke="#22d3ee" stroke-width="1.2" fill="none"/><circle cx="25" cy="48" r="2.5" stroke="#22d3ee" stroke-width="1" fill="none"/><circle cx="48" cy="52" r="5.5" stroke="#22d3ee" stroke-width="1.2" fill="none"/><circle cx="48" cy="52" r="2.5" stroke="#22d3ee" stroke-width="1" fill="none"/><rect x="13" y="18" width="16" height="8" rx="4" stroke="#22d3ee" stroke-width="1.2" fill="none"/><rect x="47" y="18" width="16" height="8" rx="4" stroke="#22d3ee" stroke-width="1.2" fill="none"/></svg>
       <div class="content-card-name">Diversión</div>
-      <div class="content-card-desc">Gaming, humor y entretenimiento</div>
+      <div class="content-card-desc">Gaming, humor y entertainment</div>
     </div>
 
     <div class="content-card cc-music">
@@ -240,5 +258,44 @@
 
   <footer>WorldFX Radio &copy; 2026<br>Tu lugar más Geek · Powered by AzuraCast</footer>
 </div>
+
+<!-- SCRIPT DE CONTROL PARA REPRODUCCIÓN INTERNA DIRECTA -->
+<script>
+  const streamUrl = "http://163.192.155.50:8000/radio.mp3"; 
+  const audio = document.getElementById("radio-stream");
+  const playBtn = document.getElementById("play-trigger");
+  const playIcon = document.getElementById("play-icon");
+  const statusText = document.getElementById("status-text");
+
+  playBtn.addEventListener("click", function() {
+    if (audio.paused) {
+      // Truco para forzar recarga del stream en vivo sin retraso
+      audio.src = streamUrl;
+      audio.load();
+      
+      statusText.innerText = "Conectando señal...";
+      
+      audio.play()
+        .then(() => {
+          playIcon.className = "ti ti-player-pause";
+          // Ajustamos margen para que la pausa quede centrada
+          playIcon.style.marginLeft = "0px"; 
+          statusText.innerText = "Transmitiendo en Vivo 📻";
+        })
+        .catch(err => {
+          console.error("Error al reproducir:", err);
+          statusText.innerText = "Error al conectar la señal.";
+        });
+    } else {
+      audio.pause();
+      // Cortamos el src al pausar para no seguir consumiendo tus datos del servidor Oracle tras bambalinas
+      audio.src = ""; 
+      playIcon.className = "ti ti-player-play";
+      playIcon.style.marginLeft = "5px";
+      statusText.innerText = "Señal en pausa";
+    }
+  });
+</script>
+
 </body>
 </html>
